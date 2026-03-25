@@ -1,7 +1,7 @@
 export default function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="site-footer-inner ">
+      <div className="site-footer-inner">
         <nav className="site-footer-links" aria-label="Footer">
           <a href="/privacy" className="site-footer-link">
             Privacy

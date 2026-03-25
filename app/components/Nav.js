@@ -21,6 +21,7 @@ const Nav = ({ isDarkMode, onToggleTheme, onRequestDemo }) => {
           alt="PrimaLabs"
           width={180}
           height={36}
+          sizes="(max-width: 480px) 42vw, 220px"
           className="nav-logo-img"
           priority
         />
