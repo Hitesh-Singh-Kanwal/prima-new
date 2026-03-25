@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
 
 /** Dark background → white wordmark + orange mark (`public/images/logo.png`). */
@@ -13,8 +14,8 @@ const Nav = ({ isDarkMode, onToggleTheme, onRequestDemo }) => {
   const logoSrc = isDarkMode ? LOGO_DARK_MODE : LOGO_LIGHT_MODE;
 
   return (
-    <nav>
-      <a href="#home" className="logo">
+    <nav className="site-nav" aria-label="Main">
+      <Link href="/" className="logo">
         <Image
           src={logoSrc}
           alt="PrimaLabs"
@@ -23,7 +24,7 @@ const Nav = ({ isDarkMode, onToggleTheme, onRequestDemo }) => {
           className="nav-logo-img"
           priority
         />
-      </a>
+      </Link>
 
       <div className="nav-right">
         <button
@@ -34,8 +35,14 @@ const Nav = ({ isDarkMode, onToggleTheme, onRequestDemo }) => {
         >
           {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-        <button onClick={onRequestDemo} className="btn btn-primary" type="button">
-          Schedule a Demo
+        <button
+          onClick={onRequestDemo}
+          className="btn btn-primary nav-demo-btn"
+          type="button"
+          aria-label="Schedule a demo"
+        >
+          <span className="nav-demo-label nav-demo-label--full">Schedule a Demo</span>
+          <span className="nav-demo-label nav-demo-label--short">Demo</span>
         </button>
       </div>
     </nav>
