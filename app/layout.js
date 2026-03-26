@@ -3,7 +3,7 @@ import Providers from "./components/Providers";
 import "./globals.css";
 
 export const metadata = {
-  title: "PrimaLabs — The Virtual Rack",
+  title: "PrimaLabs — Self-Driving AI Infrastructure",
   description:
     "PrimaLabs unlocks idle AI infrastructure capacity as a virtual rack.",
 };

@@ -11,6 +11,7 @@ export default function DemoModal({
   onFormChange,
   onSubmit,
   isSubmitting,
+  isSuccess,
 }) {
   const titleId = useId();
 
@@ -48,10 +49,20 @@ export default function DemoModal({
           <div className="demo-modal-header-text">
             <p className="demo-modal-eyebrow">Partner brief</p>
             <h2 id={titleId} className="demo-modal-title">
-              Schedule a <em>demo</em>
+              {isSuccess ? (
+                <>
+                  Request <em>sent</em>
+                </>
+              ) : (
+                <>
+                  Schedule a <em>demo</em>
+                </>
+              )}
             </h2>
             <p className="demo-modal-subtitle">
-              Tell us who you are — we’ll get back within one business day.
+              {isSuccess
+                ? "Thanks — we’ll get back within one business day."
+                : "Tell us who you are — we’ll get back within one business day."}
             </p>
           </div>
           <button
@@ -63,61 +74,75 @@ export default function DemoModal({
             ×
           </button>
         </div>
-        <form className="demo-modal-form" onSubmit={onSubmit} noValidate>
-          <label className="demo-modal-field">
-            <span className="demo-modal-label">Name</span>
-            <input
-              type="text"
-              name="name"
-              autoComplete="name"
-              value={formData.name}
-              onChange={(e) => onFormChange("name", e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </label>
-          <label className="demo-modal-field">
-            <span className="demo-modal-label">Email</span>
-            <input
-              type="email"
-              name="email"
-              autoComplete="email"
-              value={formData.email}
-              onChange={(e) => onFormChange("email", e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </label>
-          <label className="demo-modal-field">
-            <span className="demo-modal-label">Company</span>
-            <input
-              type="text"
-              name="company"
-              autoComplete="organization"
-              value={formData.company}
-              onChange={(e) => onFormChange("company", e.target.value)}
-              required
-              disabled={isSubmitting}
-            />
-          </label>
-          <div className="demo-modal-actions">
-            <button
-              type="button"
-              className="demo-modal-cancel"
-              onClick={onClose}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="demo-modal-submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? "Sending…" : "Submit"}
-            </button>
+        {isSuccess ? (
+          <div className="demo-modal-form">
+            <div className="demo-modal-actions">
+              <button
+                type="button"
+                className="demo-modal-submit"
+                onClick={onClose}
+              >
+                Done
+              </button>
+            </div>
           </div>
-        </form>
+        ) : (
+          <form className="demo-modal-form" onSubmit={onSubmit} noValidate>
+            <label className="demo-modal-field">
+              <span className="demo-modal-label">Name</span>
+              <input
+                type="text"
+                name="name"
+                autoComplete="name"
+                value={formData.name}
+                onChange={(e) => onFormChange("name", e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </label>
+            <label className="demo-modal-field">
+              <span className="demo-modal-label">Email</span>
+              <input
+                type="email"
+                name="email"
+                autoComplete="email"
+                value={formData.email}
+                onChange={(e) => onFormChange("email", e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </label>
+            <label className="demo-modal-field">
+              <span className="demo-modal-label">Company</span>
+              <input
+                type="text"
+                name="company"
+                autoComplete="organization"
+                value={formData.company}
+                onChange={(e) => onFormChange("company", e.target.value)}
+                required
+                disabled={isSubmitting}
+              />
+            </label>
+            <div className="demo-modal-actions">
+              <button
+                type="button"
+                className="demo-modal-cancel"
+                onClick={onClose}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="demo-modal-submit"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Sending…" : "Submit"}
+              </button>
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );

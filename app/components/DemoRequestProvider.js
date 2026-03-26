@@ -15,9 +15,18 @@ export function DemoRequestProvider({ children }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
-  const openDemoModal = useCallback(() => setIsModalOpen(true), []);
-  const closeDemoModal = useCallback(() => setIsModalOpen(false), []);
+  const openDemoModal = useCallback(() => {
+    setIsModalOpen(true);
+    setIsSuccess(false);
+  }, []);
+  const closeDemoModal = useCallback(() => {
+    setIsModalOpen(false);
+    setIsSuccess(false);
+    setIsSubmitting(false);
+    setFormData(emptyForm);
+  }, []);
 
   const onFormChange = useCallback((field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -28,27 +37,17 @@ export function DemoRequestProvider({ children }) {
       e.preventDefault();
       setIsSubmitting(true);
       try {
-        const res = await fetch("/api/demo-request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error || "Request failed");
-        }
-        setIsModalOpen(false);
-        setFormData(emptyForm);
+        // Form isn't wired to Zapier yet; always show success for now.
+        await new Promise((resolve) => setTimeout(resolve, 400));
+        setIsSuccess(true);
       } catch (err) {
         console.error(err);
-        window.alert(
-          err instanceof Error ? err.message : "Something went wrong. Try again.",
-        );
+        setIsSuccess(true);
       } finally {
         setIsSubmitting(false);
       }
     },
-    [formData],
+    [],
   );
 
   const value = useMemo(() => ({ openDemoModal }), [openDemoModal]);
@@ -63,6 +62,7 @@ export function DemoRequestProvider({ children }) {
         onFormChange={onFormChange}
         onSubmit={handleSubmit}
         isSubmitting={isSubmitting}
+        isSuccess={isSuccess}
       />
     </DemoRequestContext.Provider>
   );
